@@ -12,7 +12,7 @@ class RoomService {
     }
 
     rooms[roomId] = {
-      id: roomId,
+      roomId: roomId,
       users: {},
       votes: {},
       showVotes: false,

@@ -8,7 +8,7 @@ export class RoomController {
     try {
       const { roomId: customRoomId, voteOptions } = req.body;
       const room = roomService.createRoom(customRoomId, voteOptions);
-      res.status(201).json({ roomId: room.id, voteOptions: room.voteOptions });
+      res.status(201).json({ roomId: room.roomId, voteOptions: room.voteOptions });
     } catch (error) {
       if (error instanceof AppError) {
         res.status(error.statusCode).json({ message: error.message });
@@ -22,7 +22,7 @@ export class RoomController {
     try {
       const { roomId } = req.params;
       const { username } = req.body;
-      const { userId, room } = roomService.joinRoom(roomId, username);
+      const { userId } = roomService.joinRoom(roomId, username);
       res.status(200).json({ message: 'Joined room', userId });
     } catch (error) {
       if (error instanceof AppError) {

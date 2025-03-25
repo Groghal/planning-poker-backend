@@ -7,16 +7,36 @@ import { errorHandler } from './middleware/error.middleware';
 
 const app = express();
 const PORT = process.env.PORT || 3222;
+const API_BASE_PATH = process.env.API_BASE_PATH || '/api';
 
 // Middleware
 app.use(express.json());
 app.use(cors());
 
 // Routes
-app.use('/', routes);
+app.use(API_BASE_PATH, routes);
 
 // Swagger documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use(`${API_BASE_PATH}/docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocs, {
+  swaggerOptions: {
+    persistAuthorization: true,
+    displayRequestDuration: true,
+    filter: true,
+    deepLinking: true,
+    defaultModelsExpandDepth: -1,
+    defaultModelExpandDepth: 1,
+    defaultModelRendering: 'model',
+    displayOperationId: true,
+    docExpansion: 'none',
+    showExtensions: true,
+    showCommonExtensions: true,
+    supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'options', 'head', 'patch', 'trace'],
+    tryItOutEnabled: true,
+    syntaxHighlight: {
+      theme: 'monokai'
+    }
+  }
+}));
 
 // Error handling
 app.use(errorHandler);
@@ -24,5 +44,5 @@ app.use(errorHandler);
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  console.log(`API Documentation available at http://localhost:${PORT}/api-docs`);
+  console.log(`API Documentation available at http://localhost:${PORT}${API_BASE_PATH}/docs`);
 });

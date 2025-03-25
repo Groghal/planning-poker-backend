@@ -6,7 +6,7 @@ export interface User {
 }
 
 export interface Room {
-  id: string;
+  roomId: string;
   users: Record<string, User>;
   votes: Record<string, string>;
   showVotes: boolean;

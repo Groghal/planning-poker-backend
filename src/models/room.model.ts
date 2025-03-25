@@ -1,7 +1,7 @@
 import { User } from './user.model';
 
 export interface Room {
-  id: string;
+  roomId: string;
   users: Record<string, User>;
   votes: Record<string, string>;
   showVotes: boolean;
